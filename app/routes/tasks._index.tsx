@@ -3,12 +3,12 @@ import { useLoaderData } from "@remix-run/react";
 import { Todo } from "~/types/todoTypes";
 
 export const loader = async () => {
-  const response = await fetch("https://dummyjson.com/todos/user/1");
+  const response = await fetch(
+    "https://66b22eb41ca8ad33d4f6dcc6.mockapi.io/todos"
+  );
   if (!response) throw new Response("Error fetching data", { status: 400 });
   const data = await response.json();
-  const { todos } = data;
-  console.log(todos);
-  return json({ todos: todos });
+  return json({ todos: data });
 };
 
 // useFetcher
