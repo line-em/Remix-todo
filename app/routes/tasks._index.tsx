@@ -1,11 +1,14 @@
-import { Link, Outlet } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import LinkButton from "~/components/LinkButton";
+
+export const loader = async () => {
+  const data = await fetch("https://jsonplaceholder.typicode.com/todos");
+  if (!data) throw new Response("Error fetching data", { status: 400 });
+  return json({ data });
+};
 
 const TasksActions = () => {
-  return (
-    <section>
-      <Link to={"add"}>Add</Link>
-    </section>
-  );
+  return <section></section>;
 };
 
 export default TasksActions;
