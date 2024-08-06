@@ -27,6 +27,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <footer className="px-4 pb-4">Copyright X</footer>
       </body>
     </html>
   );
