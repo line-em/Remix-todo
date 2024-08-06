@@ -15,7 +15,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   await fetch("https://66b22eb41ca8ad33d4f6dcc6.mockapi.io/todos", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
     body: JSON.stringify({
       userId: 1,
       todo: todo,
