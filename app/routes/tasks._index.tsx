@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import { Todo } from "~/types/todoTypes";
 
 export const loader = async () => {
-  const response = await fetch("https://dummyjson.com/todos?limit=10&skip=10");
+  const response = await fetch("https://dummyjson.com/todos/user/1");
   if (!response) throw new Response("Error fetching data", { status: 400 });
   const data = await response.json();
   const { todos } = data;
@@ -16,7 +16,7 @@ export const loader = async () => {
 const TasksActions = () => {
   const { todos } = useLoaderData<typeof loader>();
   return (
-    <ul className="mt-4 shadow p-4 bg-white rounded leading-7 max-w-[80ch] md:mx-auto">
+    <ul className="mt-4 shadow p-4 bg-white rounded leading-7">
       {todos?.map((todo: Todo) => (
         <li
           key={todo.id}
