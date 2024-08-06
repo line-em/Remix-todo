@@ -1,6 +1,7 @@
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { ActionFunctionArgs, json } from "@remix-run/node";
+import { Form, useLoaderData } from "@remix-run/react";
 import { Todo } from "~/types/todoTypes";
+import { Circle, CircleCheckBig, Trash, Trash2 } from "lucide-react";
 
 export const loader = async () => {
   const response = await fetch(
@@ -11,7 +12,42 @@ export const loader = async () => {
   return json({ todos: data });
 };
 
-// useFetcher
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const formEntries = Object.fromEntries(formData.entries());
+
+  if (formEntries.hasOwnProperty("delete")) {
+    const deleteId = formEntries["delete"];
+    await fetch(
+      `https://66b22eb41ca8ad33d4f6dcc6.mockapi.io/todos/${deleteId}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  if (formEntries.hasOwnProperty("patch")) {
+    console.log(formEntries);
+    const patchId = formEntries["patch"];
+    const content = formEntries["content"];
+    const completed = formEntries["status"];
+    await fetch(
+      `https://66b22eb41ca8ad33d4f6dcc6.mockapi.io/todos/${patchId}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: 1,
+          id: patchId,
+          completed: completed !== "true",
+          todo: content,
+        }),
+      }
+    );
+  }
+  return null;
+};
 
 const TasksActions = () => {
   const { todos } = useLoaderData<typeof loader>();
@@ -22,21 +58,34 @@ const TasksActions = () => {
           key={todo.id}
           className="flex gap-4 py-2 [&:not(:last-child)]:border border-transparent border-b-sky-400"
         >
-          <input
-            type="checkbox"
-            name="todo"
-            id={`todo-${todo.id}`}
-            className="cursor-pointer"
-          />
-          <label
-            htmlFor={`todo-${todo.id}`}
-            className={`cursor-pointer ${
-              todo.completed ? "line-through text-gray-400" : ""
-            }`}
-          >
+          <Form method="patch" className="flex gap-2">
+            <input hidden name="patch" defaultValue={todo.id} />
+            <input hidden name="content" defaultValue={todo.todo} />
+            <input
+              hidden
+              name="status"
+              defaultValue={todo.completed ? "true" : "false"}
+            />
+            <button>
+              {todo.completed ? (
+                <CircleCheckBig className="text-green-600" />
+              ) : (
+                <Circle />
+              )}
+            </button>
             {todo.todo}
-          </label>
-          <button className="ml-auto">Delete</button>
+          </Form>
+          <Form method="delete" className="ml-auto">
+            <input
+              hidden
+              name="delete"
+              defaultValue={todo.id}
+              className="hidden"
+            />
+            <button>
+              <Trash2 className="text-red-500" />
+            </button>
+          </Form>
         </li>
       ))}
     </ul>
