@@ -13,7 +13,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     );
   }
 
-  await fetch("https://66b22eb41ca8ad33d4f6dcc6.mockapi.io/todos", {
+  await fetch(import.meta.env.VITE_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
