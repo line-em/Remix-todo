@@ -64,7 +64,7 @@ const TasksActions = () => {
           key={todo.id}
           className="flex gap-4 py-2 [&:not(:last-child)]:border border-transparent border-b-sky-400"
         >
-          <Form method="patch" className="flex gap-2">
+          <Form method="put" className="flex gap-2">
             <input hidden name="patch" defaultValue={todo.id} />
             <input hidden name="content" defaultValue={todo.todo} />
             <input
