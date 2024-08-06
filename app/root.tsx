@@ -5,7 +5,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import "./tailwind.css";
+
+import styles from "./tailwind.css?url";
+import { LinksFunction } from "@remix-run/node";
+import Header from "~/components/Header";
+
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,8 +20,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <title>Todo</title>
       </head>
-      <body>
+      <body className="w-full h-screen flex flex-col bg-gray-100 text-teal-950 gap-4">
+        <Header />
         {children}
         <ScrollRestoration />
         <Scripts />
