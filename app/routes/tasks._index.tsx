@@ -75,6 +75,7 @@ const TasksActions = () => {
             </button>
             {todo.todo}
           </Form>
+
           <Form method="delete" className="ml-auto">
             <input
               hidden
