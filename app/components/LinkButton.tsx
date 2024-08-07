@@ -11,6 +11,7 @@ const LinkButton = ({
   return (
     <Link
       to={to}
+      prefetch={"intent"}
       className="bg-amber-500 px-2 py-1 rounded text-white shadow hover:bg-amber-700 transition-colors"
     >
       {children}

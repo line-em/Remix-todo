@@ -31,12 +31,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   if (formEntries.hasOwnProperty("patch")) {
-    console.log(formEntries);
     const patchId = formEntries["patch"];
     const content = formEntries["content"];
     const completed = formEntries["status"];
     await fetch(
-      `"https://66b22eb41ca8ad33d4f6dcc6.mockapi.io/todos"/${patchId}`,
+      `https://66b22eb41ca8ad33d4f6dcc6.mockapi.io/todos/${patchId}`,
       {
         method: "PUT",
         headers: {
